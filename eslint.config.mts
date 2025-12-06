@@ -3,8 +3,6 @@
 import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
 
-const __dirname = new URL('.', import.meta.url).pathname
-
 export default tseslint.config(
 	eslint.configs.recommended,
 	tseslint.configs.strictTypeChecked,
@@ -12,12 +10,12 @@ export default tseslint.config(
 		languageOptions: {
 			parserOptions: {
 				projectService: true,
-				tsconfigRootDir: __dirname,
+				tsconfigRootDir: process.cwd(),
 			},
 		},
 	},
 	{
-		files: ['src/**/*.ts', 'tests/**/*.ts'],
+		files: ['packages/**/src/**/*.ts', 'packages/**/tests/**/*.ts'],
 		rules: {
 			'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 			'@typescript-eslint/restrict-template-expressions': [
@@ -27,7 +25,7 @@ export default tseslint.config(
 		},
 	},
 	{
-		ignores: ['**/assets/**/*'],
+		ignores: ['**/assets/**/*', '**/dist/**/*'],
 	},
 	{
 		files: ['**/tailwind.config.js'],

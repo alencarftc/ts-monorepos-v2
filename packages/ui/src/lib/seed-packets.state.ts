@@ -23,14 +23,6 @@ export const isLoading = derived(seedPacketsState, ($state) => $state.loading)
 
 export const error = derived(seedPacketsState, ($state) => $state.error)
 
-// Function to get a seed packet by ID
-export const getSeedPacketById = derived(seedPackets, ($seedPackets) => {
-	return (id: string): SeedPacketModel | undefined => {
-		return $seedPackets.find((seedPacket) => seedPacket.id === id)
-	}
-})
-
-// Function to fetch seed packets
 export async function fetchSeedPackets() {
 	seedPacketsState.update((state) => ({ ...state, loading: true, error: null }))
 

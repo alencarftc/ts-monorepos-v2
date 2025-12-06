@@ -37,5 +37,3 @@ export class ServerConfig {
 		return this.params.port
 	}
 }
-
-export default ServerConfig

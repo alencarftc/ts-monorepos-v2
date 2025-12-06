@@ -10,5 +10,3 @@ const data = fs.readFileSync(DATA_FILE_PATH, 'utf8')
 export function loadData(): SeedPacketCollectionModel {
 	return yaml.parse(data) as SeedPacketCollectionModel
 }
-
-export default loadData

@@ -71,24 +71,6 @@ export function formatEdibleParts(edibleParts: string[]): string {
 }
 
 /**
- * Formats light preference values into more readable format
- * @param lightPreference - Light preference enum value
- * @returns Formatted light preference string
- */
-export function formatLightPreference(lightPreference: string): string {
-	return lightPreference.replace('-', '-')
-}
-
-/**
- * Formats water needs into more readable format
- * @param waterNeeds - Water needs enum value
- * @returns Formatted water needs string
- */
-export function formatWaterNeeds(waterNeeds: string): string {
-	return waterNeeds
-}
-
-/**
  * Capitalizes the first letter of each word in a string
  * @param str - Input string
  * @returns Capitalized string

@@ -1,36 +1,25 @@
 {
-  "name": "@seeds/models",
-  "private": true,
-  "version": "0.0.2",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.js",
-  "type": "module",
-  "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage",
-    "lint": "eslint .",
-    "format": "prettier --write src/**/*.{ts,svelte} tests/**/*.ts {tailwind.config.js,postcss.config.cjs,vite.config.ts,svelte.config.js,eslint.config.mts}",
-    "build": "tsc -p tsconfig.build.json",
-    "build:watch": "tsc -p tsconfig.build.json --watch --preserveWatchOutput"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.28.0",
-    "@vitest/coverage-v8": "^3.2.3",
-    "@vitest/ui": "^3.2.3",
-    "vitest": "^3.2.3",
-    "concurrently": "^9.1.2",
-    "eslint": "^9.28.0",
-    "prettier": "^3.5.3",
-    "tsx": "^4.20.0",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.34.0"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "winston": "^3.17.0",
-    "yaml": "^2.8.0"
-  }
+	"name": "@seeds/models",
+	"private": true,
+	"version": "0.0.2",
+	"types": "dist/index.d.ts",
+	"module": "dist/index.js",
+	"type": "module",
+	"scripts": {
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:ui": "vitest --ui",
+		"test:coverage": "vitest run --coverage",
+		"lint": "eslint .",
+		"format": "prettier --write src/**/*.{ts,svelte} tests/**/*.ts {tailwind.config.js,postcss.config.cjs,vite.config.ts,svelte.config.js,eslint.config.mts}",
+		"build": "tsc -p tsconfig.build.json",
+		"build:watch": "tsc -p tsconfig.build.json --watch --preserveWatchOutput"
+	},
+	"devDependencies": {
+		"@vitest/coverage-v8": "^3.2.3",
+		"@vitest/ui": "^3.2.3",
+		"prettier": "^3.5.3",
+		"typescript": "5.8.3",
+		"vitest": "^3.2.3"
+	}
 }

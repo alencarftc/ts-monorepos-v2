@@ -1,16 +1,20 @@
 {
 	"extends": "../../tsconfig.json",
 	"includes": [
-		"src/**/*.ts",
-		"src/**/*.js",
-		"src/**/*.svelte",
-		"tests/**/*.ts",
-		"tests/**/*.js",
-		"tests/**/*.svelte",
 		"tailwind.config.js",
 		"postcss.config.cjs",
 		"vite.config.ts",
-		"svelte.config.js",
-		"eslint.config.mts"
+		"svelte.config.js"
+	],
+	"compilerOptions": {
+		"composite": true
+	},
+	"references": [
+		{
+			"path": "../models/tsconfig.build.json"
+		},
+		{
+			"path": "../server/tsconfig.build.json"
+		}
 	]
 }
