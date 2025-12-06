@@ -11,17 +11,12 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.svelte",
-    "tests/**/*.ts",
-    "tests/**/*.js",
-    "tests/**/*.svelte",
-    "tailwind.config.js",
-    "postcss.config.cjs",
-    "vite.config.ts",
-    "svelte.config.js",
-    "eslint.config.mts"
+    "packages/**/src/**/*.ts",
+    "packages/**/src/**/*.js",
+    "packages/**/src/**/*.svelte",
+    "packages/**/tests/**/*.ts",
+    "packages/**/tests/**/*.js",
+    "packages/**/tests/**/*.svelte"
   ],
   "exclude": ["**/assets/**/*", "node_modules", "dist"]
 }

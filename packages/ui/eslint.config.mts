@@ -3,6 +3,8 @@
 import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
 
+const __dirname = new URL('.', import.meta.url).pathname
+
 export default tseslint.config(
 	eslint.configs.recommended,
 	tseslint.configs.strictTypeChecked,
