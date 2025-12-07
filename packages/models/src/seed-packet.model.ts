@@ -665,6 +665,10 @@ interface ToxicityInfo {
 		toxicParts?: PlantPart[]
 	}
 
+	alienToxicity?: {
+		toxicParts?: PlantPart[]
+	}
+
 	// Contact safety
 	skinContact?: {
 		irritant?: boolean // Causes skin irritation
