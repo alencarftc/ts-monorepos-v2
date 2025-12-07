@@ -14,7 +14,7 @@ lerna-debug.log*
 **/.pnpm-workspace-state.json
 **/pnpm-lock.yaml
 
-
+**/temp
 dist
 dist-ssr
 *.local

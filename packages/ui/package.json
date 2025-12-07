@@ -37,7 +37,8 @@
 		"vitest": "^3.2.3"
 	},
 	"dependencies": {
-		"@seeds/models": "workspace:*"
+		"@seeds/models": "workspace:*",
+		"@tsconfig/svelte": "^5.0.6"
 	},
 	"volta": {
 		"node": "22.16.0"
