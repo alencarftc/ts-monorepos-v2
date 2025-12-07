@@ -1,0 +1,14 @@
+{
+	"workspaces": {
+		"packages/*": {
+			"entry": ["src/{index,main}.ts"],
+			"project": "src/**/*.{ts,svelte}"
+		}
+	},
+	"ignoreDependencies": [
+		"@manypkg/cli",
+		"syncpack",
+		"@vitest/coverage-v8",
+		"@testing-library/svelte"
+	]
+}

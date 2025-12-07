@@ -1,182 +1,61 @@
-# TypeScript Monorepos Course
+## Seeds Monorepo
 
-This repository contains the code and exercises for the TypeScript Monorepos course. The project is a seed catalog application built with Svelte, TypeScript, and Express.
+TypeScript-first pnpm workspace for a tiny seed-catalog app: reusable domain models, an Express API serving seed data from YAML, and a Svelte + Tailwind client that visualizes the packets. The repo is wired for fast iterative work (pnpm, Nx target defaults) and consistent code quality (ESLint, Prettier, Vitest).
 
-## Prerequisites
+### Tech stack
+- Workspace: pnpm 10, Volta-pinned Node 22, Lerna (versioning scaffold), Nx 22 (target defaults + caching), TypeScript 5.8.
+- Domain models (`@seeds/models`): plain TypeScript models, emits `dist/` ESM + d.ts, API Extractor + API Documenter config for reference docs.
+- API (`@seeds/server`): Express 5 + CORS, YAML-backed data loader, Winston structured logging, simple REST at `/api/seeds`.
+- Web UI (`@seeds/client`): Svelte 5 + Vite 6, Tailwind CSS 4 + DaisyUI, Svelte stores for data fetching, typed against `@seeds/models`.
+- Quality: Vitest 3 (plus Testing Library for Svelte/UI), ESLint 9, Prettier 3; optional coverage via `vitest --coverage`.
 
-- Node.js (version 22.16.0 or higher)
-- ppnpm (version 10.0.0 or higher)
-- Git
-
-## Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone git@github.com:mike-north/ts-monorepos-v2.git
-cd ts-monorepos-v2
+### Monorepo layout
+```
+packages/
+	models/        # Domain types, API Extractor config, generated docs in docs/
+	server/        # Express API, YAML data in data/seeds.yml, routes under src/
+	ui/            # Svelte client, Tailwind 4 styling, Vite config
+scripts/
+	dev.sh         # Convenience script to run client/server/models in parallel (posix shell)
 ```
 
-### 2. Node Version Management
+### Getting started
+1) Install deps
+- `pnpm install`
 
-This project uses Node.js version 22.16.0. 
+2) Run everything (posix shell required for the helper script)
+- `pnpm dev` (calls `scripts/dev.sh` via concurrently). On Windows, run under Git Bash/WSL or start the processes below manually.
 
-#### Volta
-Volta is a great tool for managing node versions across different projects. Get it at [https://volta.sh](volta.sh)
+3) Run services individually (recommended on Windows)
+- `pnpm --filter @seeds/models run build:watch`
+- `pnpm --filter @seeds/server run dev` (default port 3000; set `PORT`/`LOG_LEVEL` if needed)
+- `pnpm --filter @seeds/client run dev` (default Vite port 5173; add `-- --host` to expose)
 
-You can install volta in any POSIX-compliant operating system that supports `curl` by running
-```sh
-curl https://get.volta.sh | bash
-```
-You may need to close and reopen your terminal before your can verify that your environment has volta installed
-```sh
-volta --version
-> 2.0.2 
-```
+### Core commands
+- Test: `pnpm test` (repo-wide) or `pnpm --filter <pkg> run test`
+- Lint: `pnpm lint` or `pnpm --filter <pkg> run lint`
+- Type check: `pnpm --filter @seeds/client run check`, `pnpm --filter @seeds/server run build`, `pnpm --filter @seeds/models run build`
+- Format: `pnpm format`
+- Build artifacts: `pnpm --filter @seeds/models run build`, `pnpm --filter @seeds/server run build`, `pnpm --filter @seeds/client run build`
 
-#### Nvm
-If you have `nvm` (Node Version Manager) installed, you can automatically use the correct version:
+### API surface
+- `GET /api/seeds` returns the seed packet collection loaded from `packages/server/data/seeds.yml`. The response shape follows `SeedPacketCollectionModel` from `@seeds/models`.
 
-```bash
-nvm use
-```
+### Nx & caching
+- `nx.json` defines target defaults (cached outputs for build/test/lint/check). When you add Nx project configs, `nx run <project>:<target>` will reuse those defaults and enable the Nx task graph/caching. For now, commands are run via package scripts and pnpm filters.
 
-### 3. Install `pnpm` if you don't have it already
-Make sure you have [`pnpm`](https://pnpm.io/) installed.
+### Notes & troubleshooting
+- `scripts/dev.sh` assumes a posix shell; on Windows prefer running the three commands under “Run services individually.”
+- Tailwind CSS 4 (oxide) is listed in `onlyBuiltDependencies` for pnpm to prebuild native bits; ensure pnpm respects that on fresh installs.
 
-If you use `volta` you can just run
-```sh
-volta install pnpm
-```
-Alternatively you can follow [`pnpm`'s direct installation instructions](https://pnpm.io/installation)
+### Techstack for configuring a scalable typescript monorepo
 
-### 3. Install Dependencies
-
-Install all project dependencies using pnpm:
-
-```bash
-pnpm install
-```
-
-### 4. Test whether basic tasks work
-
-```sh
-pnpm run build      # Build the project
-pnpm run lint       # Lint the project
-pnpm run test       # Test the project
-```
-
-### 5. Test whether the `dev` script works
-
-```sh
-pnpm run dev
-```
-* You should be able to go to http://localhost:3000/api/seeds in a browser and see some JSON
-* You should be able to go to http://localhost:5173/ and see a UI that looks like this
-
-## Available Scripts
-
-### Development Scripts
-
-- **`pnpm run dev`** - Start both the server and client in development mode with hot reload
-  - Runs the Express server and Vite dev server concurrently
-  - Server runs on the backend, client runs on the frontend
-  - Uses colored output to distinguish between server (yellow) and client (blue) logs
-
-- **`pnpm run dev-server`** - Start only the Express server in development mode
-  - Runs the backend API server using `tsx`
-
-- **`pnpm run dev-client`** - Start only the Vite development server
-  - Runs the frontend Svelte application
-
-### Build Scripts
-
-- **`pnpm run build`** - Build the project for production
-  - Creates optimized build files in the `dist` directory
-
-- **`pnpm run preview`** - Preview the production build locally
-  - Serves the built application for testing
-
-### Testing Scripts
-
-- **`pnpm run test`** - Run tests once (no watch mode)
-  - Useful for CI/CD pipelines
-
-- **`pnpm run test:watch`** - Run tests in watch mode
-  - Uses Vitest for running tests
-  - Automatically re-runs tests when files change
-
-- **`pnpm run test:ui`** - Run tests with Vitest UI
-  - Opens a web interface for running and viewing tests
-
-- **`pnpm run test:coverage`** - Run tests with coverage report
-  - Generates code coverage reports
-
-### Quality Assurance Scripts
-
-- **`pnpm run check`** - Run TypeScript and Svelte type checking
-  - Validates TypeScript types across the project
-
-- **`pnpm run lint`** - Run ESLint to check code quality
-  - Checks for code style and potential issues
-
-## Project Structure
-
-```
-ts-monorepos-v2/
-├── src/
-│   ├── server/          # Express server code
-│   ├── lib/             # Shared library code
-│   ├── models/          # Data models
-│   └── utils/           # Utility functions
-├── tests/               # Test files
-├── public/              # Static assets
-├── dist/                # Build output (generated)
-└── coverage/            # Test coverage reports (generated)
-```
-
-## Tech Stack
-
-- **Frontend**: Svelte 5, TypeScript, Tailwind CSS, DaisyUI
-- **Backend**: Express.js, TypeScript
-- **Build Tool**: Vite
-- **Testing**: Vitest, Testing Library
-- **Linting**: ESLint
-- **Styling**: Tailwind CSS, PostCSS, Sass
-
-## Getting Started with Development
-
-1. **Start the development environment**:
-   ```bash
-   pnpm run dev
-   ```
-
-2. **Run tests**:
-   ```bash
-   pnpm run test
-   ```
-
-3. **Check code quality**:
-   ```bash
-   pnpm run lint
-   pnpm run check
-   ```
-
-4. **Build for production**:
-   ```bash
-   pnpm run build
-   pnpm run preview
-   ```
-
-## Course Workflow
-
-This repository is designed to support a hands-on TypeScript monorepos course. Throughout the course, you'll work with:
-
-- TypeScript configuration and compilation
-- Monorepo structure and organization
-- Shared libraries and dependencies
-- Build tools and bundling
-- Testing strategies
-- Code quality and linting
-
-Happy coding! 🚀
+- pnpm-workspace - for managing multiple packages
+- manypkg/cli - for formatting packages package.json files
+- syncpack - for unifying packages dependencies versions
+- @microsoft/api-extractor - for extracting typescript types info and generating docs
+- @microsoft/api-documenter - for generating markdown docs from typescript types info
+- nx - for orchestrating tasks along packages through affected graph with caching and interdependencies awareness
+- lerna - for managing packages with multiple packages (uses nx under the hood)
+- knip - for detecting unused dependencies, files, code and exports
+- volta - for managing node version on machine and for syncing it along monorepo packages

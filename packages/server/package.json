@@ -1,0 +1,35 @@
+{
+	"name": "@seeds/server",
+	"private": true,
+	"version": "0.0.2",
+	"type": "module",
+	"scripts": {
+		"dev": "tsx --watch --watch-preserve-output src/index.ts",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:ui": "vitest --ui",
+		"test:coverage": "vitest run --coverage",
+		"lint": "eslint .",
+		"format": "prettier --write src/**/*.{ts,svelte} tests/**/*.ts {tailwind.config.js,postcss.config.cjs,vite.config.ts,svelte.config.js,eslint.config.mts}",
+		"build": "tsc -p tsconfig.build.json",
+		"build:watch": "tsc -p tsconfig.build.json --watch --preserveWatchOutput"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.19",
+		"@types/express": "^5.0.3",
+		"@types/node": "^24.0.0",
+		"@vitest/coverage-v8": "^3.2.3",
+		"eslint": "^9.28.0",
+		"prettier": "^3.5.3",
+		"tsx": "^4.20.0",
+		"typescript": "5.8.3",
+		"vitest": "^3.2.3"
+	},
+	"dependencies": {
+		"@seeds/models": "workspace:*",
+		"cors": "^2.8.5",
+		"express": "^5.1.0",
+		"winston": "^3.17.0",
+		"yaml": "^2.8.0"
+	}
+}
